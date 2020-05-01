@@ -15,7 +15,7 @@ for country in countries:
         for i in country['children']:
             country_dictionary[i['name']] = i['id']
 
-for item in response:
+for item in response[::]:
     try:
         country_dictionary[states[item['state']]]
     except:
