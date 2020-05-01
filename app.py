@@ -1,7 +1,7 @@
 import requests
 
 from country_code import states
-
+from metric import get_metric_ids
 countries = requests.get('http://localhost:3000/regions/').json()
 country_dictionary = {}
 
@@ -10,11 +10,12 @@ for country in countries:
         for i in country['children']:
             country_dictionary[i['name']] = i['id']
 
+metric_ids = get_metric_ids()
 
 def post_new_cases(data, key):
     body = {
         'region': country_dictionary[states[key]],
-        'metric': 'b206bb67-a919-4d39-b3db-0a36495aa56f',  # UUID for new cases
+        'metric': metric_ids['new_cases_metric'],
         'date': data['date'],
         'value': data['positiveIncrease'] if data['positiveIncrease'] else 0,
         'rollup': False,
@@ -28,7 +29,7 @@ def post_new_cases(data, key):
 def post_active_cases(data, key):
     body = {
         'region': country_dictionary[states[key]],
-        'metric': '719f7e60-c1a9-4292-ba37-89a3913cb1ff',  # UUID for new cases
+        'metric': metric_ids['active_metric'],
         'date': data['date'],
         'value': data['positive'] if data['positive'] else 0,
         'rollup': False,
@@ -42,7 +43,7 @@ def post_active_cases(data, key):
 def post_deaths(data, key):
     body = {
         'region': country_dictionary[states[key]],
-        'metric': 'e622f7ff-c716-4152-8edd-a65f5ebe9a2d',  # UUID for new cases
+        'metric': metric_ids['deaths_metric'],
         'date': data['date'],
         'value': data['death'] if data['death'] else 0,
         'rollup': False,
@@ -56,7 +57,7 @@ def post_deaths(data, key):
 def post_recovered(data, key):
     body = {
         'region': country_dictionary[states[key]],
-        'metric': '409f7d1b-1b5b-442f-8ea2-5439c153a79a',  # UUID for new cases
+        'metric': metric_ids['recovered_metric'],
         'date': data['date'],
         'value': data['recovered'] if data['recovered'] else 0,
         'rollup': False,
