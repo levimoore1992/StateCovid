@@ -43,7 +43,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         deaths_body = {
             'region': country_dictionary[states[item['state']]],
             'metric': metric_ids['deaths_metric'],
-            'date': datetime.strptime(item['date'], '%Y%m%d,%f'),
+            'date': datetime.strptime(item['date'], '%Y%m%d').timestamp() * 1000,
             'value': item['death'] if item['death'] else 0,
             'rollup': False,
             'source': 'https://covidtracking.com'
@@ -55,7 +55,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         recovered_body = {
             'region': country_dictionary[states[item['state']]],
             'metric': metric_ids['recovered_metric'],
-            'date': datetime.strptime(item['date'], '%Y%m%d,%f'),
+            'date': datetime.strptime(item['date'], '%Y%m%d').timestamp() * 1000,
             'value': item['recovered'] if item['recovered'] else 0,
             'rollup': False,
             'source': 'https://covidtracking.com'
@@ -67,7 +67,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         active_body = {
             'region': country_dictionary[states[item['state']]],
             'metric': metric_ids['active_metric'],
-            'date': datetime.strptime(item['date'], '%Y%m%d,%f'),
+            'date': datetime.strptime(item['date'], '%Y%m%d').timestamp() * 1000,
             'value': item['positive'] if item['positive'] else 0,
             'rollup': False,
             'source': 'https://covidtracking.com'
