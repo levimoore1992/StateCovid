@@ -15,14 +15,16 @@ for country in countries:
         for i in country['children']:
             country_dictionary[i['name']] = i['id']
 
-for item in response[::]:
+for item in response[::]:  # we need to search the list in reverse order so that the time series looks right
+
+    # If the item isnt part of the US states ex american samoa it will just move on to the next one
     try:
         country_dictionary[states[item['state']]]
     except:
         continue
-
+    # since each object has all the data we need we can just search the object once and get all the data into
+    # four objects that we'll send
     try:
-
         new_cases_body = {
             'region': country_dictionary[states[item['state']]],
             'metric': metric_ids['new_cases_metric'],
@@ -32,11 +34,9 @@ for item in response[::]:
             'source': 'https://covidtracking.com'
         }
         requests.post(url, new_cases_body)
-
     except Exception as e:
         print(f'failed on new cases for {item}')
     try:
-
         deaths_body = {
             'region': country_dictionary[states[item['state']]],
             'metric': metric_ids['deaths_metric'],
@@ -46,10 +46,8 @@ for item in response[::]:
             'source': 'https://covidtracking.com'
         }
         requests.post(url, deaths_body)
-
     except:
         print(f'failed on deaths for {item}')
-
     try:
         recovered_body = {
             'region': country_dictionary[states[item['state']]],
@@ -60,10 +58,8 @@ for item in response[::]:
             'source': 'https://covidtracking.com'
         }
         requests.post(url, recovered_body)
-
     except:
         print(f'failed on recoveries for {item}')
-
     try:
         active_body = {
             'region': country_dictionary[states[item['state']]],
@@ -74,7 +70,5 @@ for item in response[::]:
             'source': 'https://covidtracking.com'
         }
         requests.post(url, active_body)
-
     except:
         print(f'failed on active cases for {item}')
-
