@@ -11,7 +11,7 @@ def get_metric_ids():
         'new_cases_metric': ''
     }
 
-    for metric in metrics:
+    for metric in metrics.json():
         if metric['slug'] == 'new-cases':
             metric_ids['new_cases_metric'] = metric['id']
 
