@@ -15,7 +15,7 @@ for country in countries:
         for i in country['children']:
             country_dictionary[i['name']] = i['id']
 
-for item in response[::]:  # we need to search the list in reverse order so that the time series looks right
+for item in response:  # we need to search the list in reverse order so that the time series looks right
 
     #fix date
     item['date'] = str(item['date'])
