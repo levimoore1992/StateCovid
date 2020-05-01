@@ -38,7 +38,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         }
         requests.post(url, new_cases_body)
     except Exception as e:
-        print(f'failed on new cases for {item}')
+        print(f'The application is fine it just couldnt new cases in the this object {item}')
     try:
         deaths_body = {
             'region': country_dictionary[states[item['state']]],
@@ -50,7 +50,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         }
         requests.post(url, deaths_body)
     except:
-        print(f'failed on deaths for {item}')
+        print(f'The application is fine it just couldnt  deaths in the this object {item}')
     try:
         recovered_body = {
             'region': country_dictionary[states[item['state']]],
@@ -62,7 +62,7 @@ for item in response[::]:  # we need to search the list in reverse order so that
         }
         requests.post(url, recovered_body)
     except:
-        print(f'failed on recoveries for {item}')
+        print(f'The application is fine it just couldnt find recoveries in the this object {item}')
     try:
         active_body = {
             'region': country_dictionary[states[item['state']]],
@@ -74,4 +74,4 @@ for item in response[::]:  # we need to search the list in reverse order so that
         }
         requests.post(url, active_body)
     except:
-        print(f'failed on active cases for {item}')
+        print(f'The application is fine it just couldnt  active cases in the this object {item}')
